@@ -5,7 +5,7 @@ import hw04.CS232LinkedBinaryTree.BTNode;
 
 import org.junit.Test;
 
-public class No6Tests {
+public class No6Tests1 {
 
 	@Test
 	public void testSubTreeConstructorEmptySubTrees() {

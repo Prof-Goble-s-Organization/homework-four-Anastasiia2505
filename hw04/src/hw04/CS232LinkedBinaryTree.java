@@ -1,5 +1,6 @@
 package hw04;
 
+
 import java.util.*;
 
 /**
@@ -20,13 +21,13 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 	public CS232LinkedBinaryTree() {
 		root = null;
 		size = 0;
-	}
+	} 
 
 	/**
 	 * Construct a new LinkedBinaryTree with the specified key, value pair
 	 * stored at the root.
 	 * 
-	 * @param key
+	 * @param key 
 	 *            the key.
 	 * @param value
 	 *            the value.
@@ -132,7 +133,34 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 	public CS232LinkedBinaryTree(CS232LinkedBinaryTree<K, V> leftSubTree,
 			K key, V value, CS232LinkedBinaryTree<K, V> rightSubTree) {
 		// Intentionally not implemented - see homework assignment.
-		throw new UnsupportedOperationException("Not yet implemented");
+		root = new BTNode<K, V> (key, value);
+		if(leftSubTree.root == null && rightSubTree.root == null) {
+			root.left = null;
+			root.right = null;
+		}
+		
+		else if(leftSubTree.root == null) {
+			root.left = null;
+			rightSubTree.root.parent = root;
+			root.right = rightSubTree.root;
+		}
+		else if(rightSubTree.root == null) {
+			root.right = null;
+			leftSubTree.root.parent = root;
+			root.left = leftSubTree.root;
+		}
+		
+		else if (leftSubTree.root != null && rightSubTree.root != null){
+		
+		leftSubTree.root.parent = root;
+		root.left = leftSubTree.root;
+		
+		rightSubTree.root.parent = root;
+		root.right = rightSubTree.root;
+		
+		}
+		
+		size = leftSubTree.size + rightSubTree.size +1;
 	}
 
 	/**
@@ -240,7 +268,7 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 			return null;
 		} else {
 			/*
-			 * Do the levelorder traverse from the node to be removed to find
+			 * Do the level-order traverse from the node to be removed to find
 			 * the rightmost deepest descendant (rdd).
 			 */
 			Queue<BTNode<K, V>> nodeQ = new LinkedList<BTNode<K, V>>();
@@ -296,8 +324,15 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 	 * {@inheritDoc}
 	 */
 	public void visitInOrder(CS232Visitor<K, V> visitor) {
-		// Intentionally not implemented - see homework assignment.
-		throw new UnsupportedOperationException("Not yet implemented");
+		subTreeVisitInOrder(root, visitor);
+	}
+	public void subTreeVisitInOrder(BTNode<K, V> subTreeRoot, 
+			CS232Visitor<K, V> visitor) {
+		if (subTreeRoot != null) {
+			subTreeVisitPostOrder(subTreeRoot.left, visitor);
+			visitor.visit(subTreeRoot.key, subTreeRoot.value);
+			subTreeVisitPostOrder(subTreeRoot.right, visitor);
+		}
 	}
 
 	/**
@@ -389,6 +424,25 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 		 * pointers are necessary it is included here from the start. This
 		 * allows the Heap and AVL Trees to inherit much of the functionality
 		 * (e.g. traversals) from earlier implementations.
-		 */
+		 */ 
+	}
+	
+	public static void main(String[] args) {
+		CS232LinkedBinaryTree<String, String> rTree = new CS232LinkedBinaryTree<String, String>();
+		CS232LinkedBinaryTree<String, String> lTree = new CS232LinkedBinaryTree<String, String>();
+		CS232LinkedBinaryTree<String, String> t = new CS232LinkedBinaryTree<String, String>(
+				lTree, "A", "1", rTree);
+		System.out.println(t.size);
+		
+//		String[] rKeys = { "A", "B", "C" };
+//		String[] rVals = { "1", "2", "3" };
+//		CS232LinkedBinaryTree<String, String> rTree = new CS232LinkedBinaryTree<String, String>(
+//				rKeys, rVals);
+//
+//		CS232LinkedBinaryTree<String, String> lTree = new CS232LinkedBinaryTree<String, String>();
+//
+//		CS232LinkedBinaryTree<String, String> t = new CS232LinkedBinaryTree<String, String>(
+//				lTree, "D", "4", rTree);
+//		System.out.println(t.size);
 	}
 }
