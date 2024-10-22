@@ -17,7 +17,7 @@ public class No8Tests {
 		assertEquals("Incorrect size", 1, t.size());
 		assertNotNull("Tree does not contain added key", t.get("A"));
 		assertEquals("Incorrect value associated with key", "1", t.get("A"));
-
+ 
 		checkTreeStructure(t.root);
 	}
 
