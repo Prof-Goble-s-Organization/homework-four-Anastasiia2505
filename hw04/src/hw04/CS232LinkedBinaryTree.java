@@ -174,10 +174,39 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 	 * {@inheritDoc}
 	 */
 	public boolean contains(K key) {
-		// Intentionally not implemented - see homework assignment.
-		throw new UnsupportedOperationException("Not yet implemented");
+//		// Intentionally not implemented - see homework assignment.
+//		throw new UnsupportedOperationException("Not yet implemented");
+		if(root == null) {
+			return false;
+		}
+		else if(root.key.equals(key)) {
+			return true;
+		}
+		else {
+			return subTreeContains(root.left, key) || subTreeContains(root.right, key);
+		}
 	}
 
+	public boolean subTreeContains(BTNode<K, V> subTreeRoot, K key) {
+		if(subTreeRoot == null) {
+			return false;
+		}
+		else if(subTreeRoot.key.equals(key)) {
+			return true;
+		} 
+		else {
+			boolean var = subTreeContains(subTreeRoot.left, key);
+			if(var == true) {
+				return true;
+			}
+			
+			return subTreeContains(subTreeRoot.right, key);
+			
+				}
+			}
+
+	
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -428,21 +457,10 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 	}
 	
 	public static void main(String[] args) {
-		CS232LinkedBinaryTree<String, String> rTree = new CS232LinkedBinaryTree<String, String>();
-		CS232LinkedBinaryTree<String, String> lTree = new CS232LinkedBinaryTree<String, String>();
+		String[] keys = { "A", "B", "C" };
+		String[] vals = { "1", "2", "3" };
 		CS232LinkedBinaryTree<String, String> t = new CS232LinkedBinaryTree<String, String>(
-				lTree, "A", "1", rTree);
-		System.out.println(t.size);
-		
-//		String[] rKeys = { "A", "B", "C" };
-//		String[] rVals = { "1", "2", "3" };
-//		CS232LinkedBinaryTree<String, String> rTree = new CS232LinkedBinaryTree<String, String>(
-//				rKeys, rVals);
-//
-//		CS232LinkedBinaryTree<String, String> lTree = new CS232LinkedBinaryTree<String, String>();
-//
-//		CS232LinkedBinaryTree<String, String> t = new CS232LinkedBinaryTree<String, String>(
-//				lTree, "D", "4", rTree);
-//		System.out.println(t.size);
+				keys, vals);
+		System.out.println(t.contains("C"));
 	}
 }
