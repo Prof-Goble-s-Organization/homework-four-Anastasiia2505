@@ -19,7 +19,7 @@ public class No7Tests {
 
 		assertTrue("contains() did not find key at root.", t.contains("A"));
 	}
-
+ 
 	@Test
 	public void testContainsKeyNotThereOneNodeTree() {
 		CS232LinkedBinaryTree<String, String> t = new CS232LinkedBinaryTree<String, String>(
