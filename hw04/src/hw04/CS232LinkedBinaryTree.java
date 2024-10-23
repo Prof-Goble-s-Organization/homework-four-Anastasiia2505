@@ -386,9 +386,9 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 	public void subTreeVisitInOrder(BTNode<K, V> subTreeRoot, 
 			CS232Visitor<K, V> visitor) {
 		if (subTreeRoot != null) {
-			subTreeVisitPostOrder(subTreeRoot.left, visitor);
+			subTreeVisitInOrder(subTreeRoot.left, visitor);
 			visitor.visit(subTreeRoot.key, subTreeRoot.value);
-			subTreeVisitPostOrder(subTreeRoot.right, visitor);
+			subTreeVisitInOrder(subTreeRoot.right, visitor);
 		}
 	}
 
@@ -447,8 +447,34 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 	 */
 	public int countLeafNodes() {
 		// Intentionally not implemented - see homework assignment.
-		throw new UnsupportedOperationException("Not yet implemented");
+		//throw new UnsupportedOperationException("Not yet implemented");
+		Queue<BTNode<K, V>> nodeQ = new LinkedList<BTNode<K, V>>();
+		nodeQ.add(root);
+		
+		int count = 0;
+		if(root == null) {
+			count = 0;
+		}
+		
+		else {
+			while(!nodeQ.isEmpty()) {
+			BTNode<K, V> node = nodeQ.remove();
+			if(node == null) {
+				count = count;
+			}
+			else if(node.isLeaf()) {
+				count++;
+			}
+			else {
+				nodeQ.add(node.left);
+				nodeQ.add(node.right);
+			}
+		}
+		}
+		return count;
+		
 	}
+	
 
 	/*
 	 * Class that represents a node in a binary tree. Each node holds a key,
@@ -491,14 +517,22 @@ public class CS232LinkedBinaryTree<K, V> implements CS232BinaryTree<K, V> {
 //				keys, vals);
 //		System.out.println(t.contains("C"));
 
-		
-		String[] keys = new String[] { "A", "B", "C", "D", "E" };
-		String[] vals = new String[] { "1", "2", "3", "4", "5" };
+//		
+//		String[] keys = new String[] { "A", "B", "C", "D", "E" };
+//		String[] vals = new String[] { "1", "2", "3", "4", "5" };
+//		CS232LinkedBinaryTree<String, String> t = new CS232LinkedBinaryTree<String, String>(
+//				keys, vals);
+//		t.add("F", "6");
+//		System.out.println(t.size);
+//		
+		String[] keys = { "A", "B", "C", "D", "E", "F", "G" };
+		String[] vals = { "1", "2", "3", "4", "5", "6", "7" };
 		CS232LinkedBinaryTree<String, String> t = new CS232LinkedBinaryTree<String, String>(
 				keys, vals);
-		t.add("F", "6");
-		System.out.println(t.size);
-		
+
+		t.remove("D");
+		int leaves = t.countLeafNodes();
+		System.out.println(leaves);
 }
 }
 	
